@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-18 12:28:20
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-03-26 10:49:46
+ * @LastEditTime: 2023-03-26 12:12:00
  * @FilePath: \SoftPositE\source\test\main.c
  * @Description: 
  * @Reference: 
@@ -12,9 +12,11 @@
 #include "../SoftPositE.h"
 
 void test_posit_muladd();
+void test_convertPositToDouble();
 
 int main(){
-    test_posit_muladd();
+    // test_posit_muladd();
+    test_convertPositToDouble();
 }
 
 void test_posit_muladd(){
@@ -37,4 +39,36 @@ void test_posit_muladd(){
     printf("uiZ = ");
     printBinary((uint64_t*)&uiZ, n);
 
+}
+
+void test_convertPositToDouble(){
+    posit32_t pA, pZ;
+    int n, es;
+    double f64;
+    uint32_t uiA, uiZ;
+    
+    // test instance
+    pA.v = 0xff121901;
+    n = 16;
+    es = 2;
+    // valid input data
+    uiA = pA.v >> (32-n);
+    printf("uiA = ");
+    printBinary((uint64_t*)&uiA, n);
+    // convert to double
+    f64 = convertPositToDouble(pA, n, es);
+    printf("f64 = %.15f\n", f64);
+    // convert to posit again
+    pZ = convertDoubleToPosit(f64, n, es);
+    // valid output data
+    uiZ = pZ.v >> (32-n);
+    printf("uiZ = ");
+    printBinary((uint64_t*)&uiZ, n);
+    
+    if(uiA==uiZ){
+        printf("Congratulations! Validation Successful!\n");
+    }
+    else{
+        printf("Uh-oh, Validation Failed!\n");
+    }
 }
