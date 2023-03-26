@@ -2,12 +2,25 @@
 C-based Function Extension of SoftPosit Library
 
 ### About SoftPositE
-Extension of SoftPosit, aiming to address the challenges of SoftPosit Library.
-Currently, we have implemented the following extended functions. We are working on according to our own needs...
+**Extension of SoftPosit**, aiming to address the challenges of SoftPosit Library.
 
+Currently, we have implemented the following extended functions. We are still working on..., according to our own requirements.
 
-### About SoftPosit
+```
+// posit-based fma unit, supporting arbitrary posit format
+uint32_t posit_muladd(
+	uint_fast32_t uiA, uint_fast32_t uiB, uint_fast32_t uiC, uint_fast32_t op, int n, int es);
+
+// convert arbitrary posit format to double format
+double convertPositToDouble(posit32_t pA, int n, int es);
+
+// convert double format to arbitrary posit format
+posit32_t convertDoubleToPosit(double f32, int n, int es);
+```
+
+### Appendix: About SoftPosit
 [SoftPosit](https://gitlab.com/cerlane/SoftPosit) is a comprehensive C library for posits based on Berkeley [SoftFloat](https://github.com/ucb-bar/berkeley-softfloat-3), developed by NGA reseach team.
+
 The library offers an array of posit-based operations, such as basic addition and multiplication, fused multiply-add, and format consersion. Additionally, it provides support for the quire format.
 
 #### Features
@@ -58,5 +71,3 @@ The main functions provided are as follows (take posit16_t as an example):
   - `posit_1_t`: 2-bit to 32-bit with one exponent bit (es=1)
 - **Limited Function Capabilities**: The function can be further extended, e.g., adding support for mixed-precision arithmetic.
 - **Potential Bugs**: As mentioned in README, some functions have not been exhaustively tested, that is, there may be unknown bugs.
-
-### SoftPositE (Extension of SoftPosit)
