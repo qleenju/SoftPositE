@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-26 10:58:26
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-03-26 11:28:48
+ * @LastEditTime: 2023-03-27 13:54:48
  * @FilePath: \SoftPositE\source\convertDoubleToPosit.c
  * @Description: Convert Double Format to Arbitrary Posit Format
  * @Reference: SoftPosit/c_convertDecToPositX1.c
@@ -74,9 +74,8 @@ posit32_t convertDoubleToPosit(double f32, int n, int es) {
 	int_fast32_t exp = 0;
 	bool bitNPlusOne = 0, bitsMore = 0;
 
-	// TODO
-	int_fast32_t useed = pow(2, pow(2, es));
-	int_fast32_t exp_max = pow(2, es) - 1;
+	int_fast32_t useed = 1<<(1<<es);
+	int_fast32_t exp_max = (1<<es) - 1;
 	int_fast32_t exp_ovf_bits;
 
 	(f32 >= 0) ? (sign = 0) : (sign = 1);

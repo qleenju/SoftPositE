@@ -2,13 +2,12 @@
  * @Author: Qiong Li
  * @Date: 2023-03-26 10:58:26
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-03-26 11:06:27
+ * @LastEditTime: 2023-03-27 13:50:03
  * @FilePath: \SoftPositE\source\convertPositToDouble.c
  * @Description: Convert Arbitrary Posit Format to Double Format
  * @Reference: 
  * Copyright (c) 2023 by Qiong Li qleenju@163.com, All Rights Reserved. 
  */
-
 
 #include <math.h>
 #include "SoftPositE.h"
