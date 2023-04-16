@@ -6,7 +6,14 @@ C-based Function Extension of SoftPosit Library
 
 Currently, we have implemented the following extended functions. We are still working on..., according to our own requirements.
 
+Note: the following extended functions have not been exhaustively tested, that is, there may be unknown bugs. :)
+
 ```
+// posit-based fma unit, supporting arbitrary posit format & mixed-precision strategy
+uint32_t posit_muladd_mixed(
+	uint_fast32_t uiA, uint_fast32_t uiB, uint_fast32_t uiC, uint_fast32_t op, 
+	int n_i, int es_i, int n_o, int es_o);
+
 // posit-based fma unit, supporting arbitrary posit format
 uint32_t posit_muladd(
 	uint_fast32_t uiA, uint_fast32_t uiB, uint_fast32_t uiC, uint_fast32_t op, int n, int es);
