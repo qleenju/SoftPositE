@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-16 20:23:47
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-03-26 10:23:44
+ * @LastEditTime: 2023-04-16 14:54:26
  * @FilePath: \SoftPositE\source\posit_muladd.c
  * @Description: Posit-based FMA function implemented by C
  * 	- Supports arbitrary posit formats, i.e., posit(n, es)
@@ -187,7 +187,7 @@ posit_muladd(
 			tmp = (uiC << 2) & 0xFFFFFFFF;
 			count = 0;
 			if (regSC) {
-				while (tmp >> 31 && count<=n-es-1) {
+				while (tmp >> 31 && count<=n-2) {
 					kC++;
 					tmp = (tmp << 1) & 0xFFFFFFFF;
 					count++;
@@ -195,7 +195,7 @@ posit_muladd(
 			}
 			else {
 				kC = -1;
-				while (!(tmp >> 31) && count<=n-es-1) {
+				while (!(tmp >> 31) && count<=n-2) {
 					kC--;
 					tmp = (tmp << 1) & 0xFFFFFFFF;
 					count++;
