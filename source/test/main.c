@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-18 12:28:20
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-04-16 16:20:59
+ * @LastEditTime: 2023-04-19 20:00:58
  * @FilePath: \SoftPositE\source\test\main.c
  * @Description: 
  * @Reference: 
@@ -17,9 +17,9 @@ void test_convertPositToDouble();
 void test_posit_muladd_mixed();
 
 int main(){
-    // test_posit_muladd();
+    test_posit_muladd();
     // test_convertPositToDouble();
-    test_posit_muladd_mixed();
+    // test_posit_muladd_mixed();
     
 }
 
@@ -55,11 +55,11 @@ void test_posit_muladd(){
     int es;
 
     // test instances
-    n = 8;
-    es = 3;
-    uiA = 0x5a << (32-n);
-    uiB = 0x64 << (32-n);
-    uiC = 0x01 << (32-n);
+    n = 16;
+    es = 6;
+    uiA = 0x7f5a << (32-n);
+    uiB = 0x6864 << (32-n);
+    uiC = 0xf701 << (32-n);
     op = 0;
     
     uiZ = posit_muladd(uiA, uiB, uiC, op, n, es);
