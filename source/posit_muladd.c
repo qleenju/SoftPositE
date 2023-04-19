@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-16 20:23:47
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-04-16 14:54:26
+ * @LastEditTime: 2023-04-19 20:26:35
  * @FilePath: \SoftPositE\source\posit_muladd.c
  * @Description: Posit-based FMA function implemented by C
  * 	- Supports arbitrary posit formats, i.e., posit(n, es)
@@ -297,10 +297,13 @@ posit_muladd(
 				if (frac64Z != 0) {
 					// e.g., es=1 --> exp_max=1 --> frac64Z>>61, leave the MSB 3-bits
 					// Since the MSB bit has been 0, so if the remaining 2-bits are 0, it can be normalized
+					
+					// [NOTE][FIX] If exp_max>=62 (i.e., es>=6), it will fall into an INFITE LOOP!!!
+					/*
 					while ((frac64Z >> (62-exp_max)) == 0) {
 						kZ--;
 						frac64Z <<= (exp_max+1);
-					}
+					}*/
 					while ((frac64Z >> 62) == 0) {
 						expZ--;
 						frac64Z <<= 1;

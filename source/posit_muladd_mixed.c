@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-04-16 14:05:18
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-04-16 15:02:03
+ * @LastEditTime: 2023-04-19 20:41:41
  * @FilePath: \SoftPositE\source\posit_muladd_mixed.c
  * @Description: Posit-based FMA function implemented by C, supporting mixed-precision strategy
  *      - Support arbitrary posit formats, i.e., posit(n, es)
@@ -301,10 +301,14 @@ posit_muladd_mixed(
 				if (frac64Z != 0) {
 					// e.g., es=1 --> exp_max=1 --> frac64Z>>61, leave the MSB 3-bits
 					// Since the MSB bit has been 0, so if the remaining 2-bits are 0, it can be normalized
+					
+					// [NOTE][FIX] If exp_max_o > 62 (i.e., es_o>=6), it will fall into an INFITE LOOP!!!
+					/*
 					while ((frac64Z >> (62-exp_max_o)) == 0) {
 						kZ--;
 						frac64Z <<= (exp_max_o+1);
 					}
+					*/
 					while ((frac64Z >> 62) == 0) {
 						expZ--;
 						frac64Z <<= 1;
