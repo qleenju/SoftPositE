@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include "../include/platform.h"
-#include "../include/internals.h"
+#include "include/platform.h"
+#include "include/internals.h"
 
 
 void printBinary(uint64_t * s, int size) {
