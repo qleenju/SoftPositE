@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2024-05-14 22:08:53
  * @LastEditors: Qiong Li
- * @LastEditTime: 2024-05-14 22:54:43
+ * @LastEditTime: 2024-05-18 15:34:18
  * @FilePath: \SoftPositE\source\gen_data\gen_posit_data.c
  * @Description: 
  * @Reference: 
@@ -29,7 +29,7 @@ float generate_normal() {
 }
 
 // 将生成的浮点数和十六进制表示写入文件
-void generate_and_write_to_file(const char *filename, int count) {
+void generate_and_write_to_file(const char *filename, int count, int n, int es) {
     // 打开文件以写入
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
@@ -41,11 +41,25 @@ void generate_and_write_to_file(const char *filename, int count) {
     for (int i = 0; i < count; i++) {
         float normal_value = generate_normal();
         double d = normal_value;
-        posit32_t p16 = convertDoubleToPosit(d, 16, 1);
-        uint32_t p32 = p16.v;
+        posit32_t posit_value = convertDoubleToPosit(d, n, es);
+        uint32_t p32 = posit_value.v;
 
-        char hex_str[11];  // 用于存储十六进制字符串
-        sprintf(hex_str, "0x%08X", p32>>16);
+        // 用于存储十六进制字符串
+        char hex_str[11];
+        if(n==32){
+            sprintf(hex_str, "0x%08X", p32);
+        }
+        else if(n==16){
+            sprintf(hex_str, "0x%04X", p32>>16);
+        }
+        else if(n==8){
+            sprintf(hex_str, "0x%02X", p32>>24);
+        }
+        else{
+            printf("Unsupported posit format!\n");
+            return 0;
+        }
+
         // fprintf(file, "%f %s\n", normal_value, hex_str);
         fprintf(file, "%s,\n", hex_str);
     }
@@ -59,9 +73,11 @@ int main() {
     // 设置随机数种子
     srand((unsigned int)time(NULL));
 
-    // 分别生成256个浮点数并保存到两个文件中
-    generate_and_write_to_file("p16_gemm_a.txt", 256);
-    generate_and_write_to_file("p16_gemm_b.txt", 256);
+    // 分别生成浮点数并保存到两个文件中
+    // generate_and_write_to_file("p16_gemm_a.txt", 1024, 16, 1);
+    // generate_and_write_to_file("p16_gemm_b.txt", 1024, 16, 1);
+    generate_and_write_to_file("p8_gemm_a.txt", 1024, 8, 0);
+    generate_and_write_to_file("p8_gemm_b.txt", 1024, 8, 0);
 
     return 0;
 }
