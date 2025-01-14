@@ -2,7 +2,7 @@
  * @Author: Qiong Li
  * @Date: 2023-03-18 12:28:20
  * @LastEditors: Qiong Li
- * @LastEditTime: 2023-04-19 20:00:58
+ * @LastEditTime: 2025-01-14 18:47:25
  * @FilePath: \SoftPositE\source\test\main.c
  * @Description: 
  * @Reference: 
@@ -15,11 +15,13 @@
 void test_posit_muladd();
 void test_convertPositToDouble();
 void test_posit_muladd_mixed();
+void test_posit_fma();
 
 int main(){
-    test_posit_muladd();
+    // test_posit_muladd();
     // test_convertPositToDouble();
     // test_posit_muladd_mixed();
+    test_posit_fma();
     
 }
 
@@ -99,4 +101,39 @@ void test_convertPositToDouble(){
     else{
         printf("Uh-oh, Validation Failed!\n");
     }
+}
+
+void test_posit_fma(){
+    posit32_t pA, pB, pC, pZ;
+    int n_i, es_i;
+    int n_o, es_o;
+    uint32_t uiA, uiB, uiC, uiZ;
+    
+    // test instance
+    n_i = 6;
+    es_i = 0;
+    n_o = 16;
+    es_o = 1;
+    // pA.v = 0x02 << (32-n_i);
+    // pB.v = 0x1f << (32-n_i);
+    // pC.v = 0x361d << (32-n_o);
+    pA.v = 0x1c << (32-n_i);
+    pB.v = 0x2f << (32-n_i);
+    pC.v = 0x3595 << (32-n_o);
+    // convert to double
+    double dA, dB, dC;
+    dA = convertPositToDouble(pA, n_i, es_i);
+    dB = convertPositToDouble(pB, n_i, es_i);
+    dC = convertPositToDouble(pC, n_o, es_o);
+    printf("dA = %.15f\n", dA);
+    printf("dB = %.15f\n", dB);
+    printf("dC = %.15f\n", dC);
+    // double-based fma
+    double dZ = dA*dB+dC;
+    // convert to posit again
+    pZ = convertDoubleToPosit(dZ, n_o, es_o);
+    // valid output data
+    uiZ = pZ.v >> (32-n_o);
+    printf("uiZ = ");
+    printBinary((uint64_t*)&uiZ, n_o);
 }
